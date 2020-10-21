@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
 import PropTypes from 'prop-types';
 
 import Card from 'react-bootstrap/Card';
@@ -17,26 +19,15 @@ function Clients({ clients, getClients }) {
 						key={client.id}
 						style={{ textAlign: 'center', width: '18rem', margin: '1rem' }}
 					>
-						<Card.Header>{client.genre}</Card.Header>
 						<Card.Body>
 							<Card.Title>
 								{client.prenom} {client.nom}
 							</Card.Title>
-							<Card.Text>{client.email}</Card.Text>
-							<Button
-								variant="warning"
-								// onClick={updateClient}
-								style={{ margin: '1rem' }}
-							>
-								Update
-							</Button>
-							<Button
-								variant="danger"
-								// onClick={deleteClient}
-								style={{ margin: '1rem' }}
-							>
-								Delete
-							</Button>
+							<Link to={`/clients/${client.id}`}>
+								<Button variant="primary" style={{ margin: '1rem' }}>
+									See more
+								</Button>
+							</Link>
 						</Card.Body>
 					</Card>
 				))}
