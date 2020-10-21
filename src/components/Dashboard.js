@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route, Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 import ClientForm from './ClientForm';
 import Clients from './Clients';
 
 import Button from 'react-bootstrap/Button';
+import ClientCard from './ClientCard';
 
 function Dashboard() {
 	// State
@@ -19,6 +20,9 @@ function Dashboard() {
 	const [client, setClient] = useState(initialClientState);
 	const [clients, setClients] = useState([]);
 
+	// Router history
+	const history = useHistory();
+
 	// CRUD methods
 	const getClients = () => {
 		axios
@@ -26,6 +30,15 @@ function Dashboard() {
 			.then((res) => res.data)
 			.then((data) => {
 				setClients(data);
+			});
+	};
+
+	const getClientById = (id) => {
+		axios
+			.get(`http://localhost:5000/clients/${id}`)
+			.then((res) => res.data)
+			.then((data) => {
+				setClient(data);
 			});
 	};
 
@@ -47,12 +60,11 @@ function Dashboard() {
 			.then(() => getClients());
 	};
 
-	const deleteClient = () => {
-		//TODO useParams get ID
-		const id = 52;
-		axios
-			.delete(`http://localhost:5000/clients/${id}`)
-			.then(() => getClients());
+	const deleteClient = (id) => {
+		axios.delete(`http://localhost:5000/clients/${id}`).then(() => {
+			history.push('/clients');
+			getClients();
+		});
 	};
 
 	// Form methods
@@ -72,14 +84,18 @@ function Dashboard() {
 	return (
 		<div>
 			<Route exact path="/">
-				<Link to={'clients/form/'}>
+				<Link to={'/form'}>
 					<Button variant="primary" type="submit">
 						Add a client
 					</Button>
 				</Link>
-				<Clients clients={clients} getClients={getClients} />
+				<Clients
+					clients={clients}
+					getClients={getClients}
+					deleteClient={deleteClient}
+				/>
 			</Route>
-			<Route path="/clients/form">
+			<Route path="/form">
 				<ClientForm
 					client={client}
 					handleChange={handleChange}
@@ -87,7 +103,19 @@ function Dashboard() {
 				/>
 			</Route>
 			<Route exact path="/clients">
-				<Clients clients={clients} getClients={getClients} />
+				<Clients
+					clients={clients}
+					getClients={getClients}
+					deleteClient={deleteClient}
+				/>
+			</Route>
+			<Route path="/clients/:id">
+				<ClientCard
+					client={client}
+					getClientById={getClientById}
+					updateClient={updateClient}
+					deleteClient={deleteClient}
+				></ClientCard>
 			</Route>
 		</div>
 	);
