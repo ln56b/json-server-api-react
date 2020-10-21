@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
+import ClientForm from './ClientForm';
+import Clients from './Clients';
 
 function Dashboard() {
-	const [client, setClient] = useState({});
+	// State
+	const initialClientState = {
+		id: null,
+		genre: '',
+		prenom: '',
+		nom: '',
+		email: '',
+	};
+	const [client, setClient] = useState(initialClientState);
 	const [clients, setClients] = useState([]);
-	const [newClient, setNewClient] = useState({});
 
-	useEffect(() => {
-		getClients();
-	}, []);
-
+	// CRUD methods
 	const getClients = () => {
 		axios
 			.get('http://localhost:5000/clients')
@@ -23,24 +27,22 @@ function Dashboard() {
 	};
 
 	const createClient = () => {
-		//TODO Form component
-		const client = {
-			id: 56,
-			prenom: 'Test',
-			nom: 'Test',
-			email: 'helenetest@gmail.com',
-			genre: 'Madame',
-		};
-
 		axios
 			.post('http://localhost:5000/clients', client)
 			.then((res) => res.data)
-			.then((res) => setNewClient(res))
+			.then((res) => setClient(initialClientState))
 			.then(() => getClients());
 	};
 
 	//TODO
-	const updateClient = () => {};
+	const updateClient = () => {
+		const id = 53;
+		axios
+			.put(`http://localhost:5000/clients/${id}`, client)
+			.then((res) => res.data)
+			.then((res) => setClient(initialClientState))
+			.then(() => getClients());
+	};
 
 	const deleteClient = () => {
 		//TODO useParams get ID
@@ -50,42 +52,28 @@ function Dashboard() {
 			.then(() => getClients());
 	};
 
+	// Form methods
+	const handleChange = (event) => {
+		const { name, value } = event.target;
+		setClient({ ...client, [name]: value });
+	};
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		if (!client.id) {
+			createClient();
+		}
+		updateClient();
+	};
+
 	return (
 		<div>
-			<Button variant="primary" onClick={createClient}>
-				Add a new client
-			</Button>
-			<div className="clients">
-				{clients &&
-					clients.map((client) => (
-						<Card
-							key={client.id}
-							style={{ textAlign: 'center', width: '18rem', margin: '1rem' }}
-						>
-							<Card.Header>{client.genre}</Card.Header>
-							<Card.Body>
-								<Card.Title>
-									{client.prenom} {client.nom}
-								</Card.Title>
-								<Card.Text>{client.email}</Card.Text>
-								<Button
-									variant="warning"
-									onClick={updateClient}
-									style={{ margin: '1rem' }}
-								>
-									Update
-								</Button>
-								<Button
-									variant="danger"
-									onClick={deleteClient}
-									style={{ margin: '1rem' }}
-								>
-									Delete
-								</Button>
-							</Card.Body>
-						</Card>
-					))}
-			</div>
+			<ClientForm
+				client={client}
+				handleChange={handleChange}
+				handleSubmit={handleSubmit}
+			/>
+			<Clients clients={clients} getClients={getClients} />
 		</div>
 	);
 }
