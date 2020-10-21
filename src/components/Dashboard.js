@@ -48,7 +48,7 @@ function Dashboard() {
 			.then((res) => res.data)
 			.then((res) => setClient(initialClientState))
 			.then(() => {
-				history.push('/clients');
+				history.push('/');
 				getClients();
 			});
 	};
@@ -60,14 +60,14 @@ function Dashboard() {
 			.then((res) => res.data)
 			.then(() => setClient(initialClientState))
 			.then(() => {
-				history.push('/clients');
+				history.push('/');
 				getClients();
 			});
 	};
 
 	const deleteClient = (id) => {
 		axios.delete(`http://localhost:5000/clients/${id}`).then(() => {
-			history.push('/clients');
+			history.push('/');
 			getClients();
 		});
 	};
@@ -84,10 +84,11 @@ function Dashboard() {
 	};
 
 	return (
-		<div>
+		<div className="dashboard">
 			<Route exact path="/">
+				<h1>Dashboard</h1>
 				<Link to={'/form'}>
-					<Button variant="primary" type="submit">
+					<Button variant="primary" type="submit" style={{ margin: '1rem' }}>
 						Add a client
 					</Button>
 				</Link>
@@ -102,13 +103,6 @@ function Dashboard() {
 					client={client}
 					handleChange={handleChange}
 					handleSubmit={handleSubmit}
-				/>
-			</Route>
-			<Route exact path="/clients">
-				<Clients
-					clients={clients}
-					getClients={getClients}
-					deleteClient={deleteClient}
 				/>
 			</Route>
 			<Route path="/clients/:id">

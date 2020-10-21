@@ -13,8 +13,11 @@ function ClientCard({ client, getClientById, deleteClient }) {
 	}, []);
 
 	return (
-		<div>
-			<Card style={{ textAlign: 'center', width: '18rem', margin: '1rem' }}>
+		<div className="client-card">
+			<h2>
+				Fiche détaillée de {client.prenom} {client.nom}
+			</h2>
+			<Card style={{ textAlign: 'center', width: '30rem', margin: '1rem' }}>
 				<Card.Header>{client.genre}</Card.Header>
 				<Card.Body>
 					<Card.Title>

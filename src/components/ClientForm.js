@@ -7,7 +7,8 @@ import Col from 'react-bootstrap/Col';
 
 function ClientForm({ client, handleChange, handleSubmit }) {
 	return (
-		<div>
+		<div className="form">
+			<h2>Ajouter / Modifier un client</h2>
 			<Form onSubmit={handleSubmit}>
 				<Form.Row>
 					<Col xs={12} sm={6} lg={4}>

@@ -24,7 +24,11 @@ function Clients({ clients, getClients }) {
 								{client.prenom} {client.nom}
 							</Card.Title>
 							<Link to={`/clients/${client.id}`}>
-								<Button variant="primary" style={{ margin: '1rem' }}>
+								<Button
+									variant="outline-primary"
+									style={{ margin: '1rem' }}
+									size="sm"
+								>
 									See more
 								</Button>
 							</Link>
