@@ -11,7 +11,8 @@
 }
 
 .clients {
-	display: inline-flex;
+	display: flex;
+	justify-content: center;
 	flex-wrap: wrap;
 }
 
