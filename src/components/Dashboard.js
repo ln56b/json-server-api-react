@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Route, Link } from 'react-router-dom';
 import axios from 'axios';
 
 import ClientForm from './ClientForm';
 import Clients from './Clients';
+
+import Button from 'react-bootstrap/Button';
 
 function Dashboard() {
 	// State
@@ -68,12 +71,24 @@ function Dashboard() {
 
 	return (
 		<div>
-			<ClientForm
-				client={client}
-				handleChange={handleChange}
-				handleSubmit={handleSubmit}
-			/>
-			<Clients clients={clients} getClients={getClients} />
+			<Route exact path="/">
+				<Link to={'clients/form/'}>
+					<Button variant="primary" type="submit">
+						Add a client
+					</Button>
+				</Link>
+				<Clients clients={clients} getClients={getClients} />
+			</Route>
+			<Route path="/clients/form">
+				<ClientForm
+					client={client}
+					handleChange={handleChange}
+					handleSubmit={handleSubmit}
+				/>
+			</Route>
+			<Route exact path="/clients">
+				<Clients clients={clients} getClients={getClients} />
+			</Route>
 		</div>
 	);
 }
