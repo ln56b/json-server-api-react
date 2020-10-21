@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 
@@ -22,9 +23,10 @@ function Dashboard() {
 	};
 
 	const createClient = () => {
+		//TODO Form component
 		const client = {
-			id: 52,
-			prenom: 'Hélène',
+			id: 56,
+			prenom: 'Test',
 			nom: 'Test',
 			email: 'helenetest@gmail.com',
 			genre: 'Madame',
@@ -33,14 +35,19 @@ function Dashboard() {
 		axios
 			.post('http://localhost:5000/clients', client)
 			.then((res) => res.data)
-			.then((res) => console.log(res))
-			.then((res) => setNewClient(res));
+			.then((res) => setNewClient(res))
+			.then(() => getClients());
 	};
 
+	//TODO
 	const updateClient = () => {};
 
-	const deleteClient = (id) => {
-		axios.delete(`http://localhost:5000/clients/${id}`);
+	const deleteClient = () => {
+		//TODO useParams get ID
+		const id = 52;
+		axios
+			.delete(`http://localhost:5000/clients/${id}`)
+			.then(() => getClients());
 	};
 
 	return (
