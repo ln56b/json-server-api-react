@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 
-function ClientForm({ handleChange, handleSubmit }) {
+function ClientForm({ client, handleChange, handleSubmit }) {
 	return (
 		<div>
 			<Form onSubmit={handleSubmit}>
@@ -13,7 +13,12 @@ function ClientForm({ handleChange, handleSubmit }) {
 					<Col xs={12} sm={6} lg={4}>
 						<Form.Group controlId="genre">
 							<Form.Label>Genre</Form.Label>
-							<Form.Control as="select" name="genre" onChange={handleChange}>
+							<Form.Control
+								as="select"
+								name="genre"
+								value={client.genre}
+								onChange={handleChange}
+							>
 								<option>Madame</option>
 								<option>Monsieur</option>
 							</Form.Control>
@@ -23,14 +28,24 @@ function ClientForm({ handleChange, handleSubmit }) {
 					<Col xs={12} sm={6} lg={4}>
 						<Form.Group controlId="prenom" required>
 							<Form.Label>Prénom</Form.Label>
-							<Form.Control type="text" name="prenom" onChange={handleChange} />
+							<Form.Control
+								type="text"
+								name="prenom"
+								value={client.prenom}
+								onChange={handleChange}
+							/>
 						</Form.Group>
 					</Col>
 
 					<Col xs={12} sm={6} lg={4}>
 						<Form.Group controlId="nom" required>
 							<Form.Label>Nom</Form.Label>
-							<Form.Control type="text" name="nom" onChange={handleChange} />
+							<Form.Control
+								type="text"
+								name="nom"
+								value={client.nom}
+								onChange={handleChange}
+							/>
 						</Form.Group>
 					</Col>
 				</Form.Row>
@@ -42,6 +57,7 @@ function ClientForm({ handleChange, handleSubmit }) {
 							<Form.Control
 								type="email"
 								name="email"
+								value={client.email}
 								placeholder="Entrez un email"
 								onChange={handleChange}
 							/>
@@ -54,6 +70,7 @@ function ClientForm({ handleChange, handleSubmit }) {
 							<Form.Control
 								type="password"
 								name="password"
+								value={client.password}
 								placeholder="Mot de passe"
 								onChange={handleChange}
 							/>
@@ -70,6 +87,7 @@ function ClientForm({ handleChange, handleSubmit }) {
 }
 
 ClientForm.propTypes = {
+	client: PropTypes.object.isRequired,
 	handleChange: PropTypes.func.isRequired,
 	handleSubmit: PropTypes.func.isRequired,
 };

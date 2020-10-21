@@ -47,17 +47,22 @@ function Dashboard() {
 			.post('http://localhost:5000/clients', client)
 			.then((res) => res.data)
 			.then((res) => setClient(initialClientState))
-			.then(() => getClients());
+			.then(() => {
+				history.push('/clients');
+				getClients();
+			});
 	};
 
 	//TODO
-	const updateClient = () => {
-		const id = 53;
+	const updateClient = (client) => {
 		axios
-			.put(`http://localhost:5000/clients/${id}`, client)
+			.put(`http://localhost:5000/clients/${client.id}`, client)
 			.then((res) => res.data)
-			.then((res) => setClient(initialClientState))
-			.then(() => getClients());
+			.then(() => setClient(initialClientState))
+			.then(() => {
+				history.push('/clients');
+				getClients();
+			});
 	};
 
 	const deleteClient = (id) => {
@@ -75,10 +80,7 @@ function Dashboard() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		if (!client.id) {
-			createClient();
-		}
-		updateClient();
+		!client.id ? createClient() : updateClient(client);
 	};
 
 	return (

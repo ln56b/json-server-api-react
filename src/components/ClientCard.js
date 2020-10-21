@@ -5,7 +5,7 @@ import { Link, useParams } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 
-function ClientCard({ client, getClientById, updateClient, deleteClient }) {
+function ClientCard({ client, getClientById, deleteClient }) {
 	let { id } = useParams();
 
 	useEffect(() => {
@@ -42,7 +42,6 @@ function ClientCard({ client, getClientById, updateClient, deleteClient }) {
 ClientCard.propTypes = {
 	client: PropTypes.object.isRequired,
 	getClientById: PropTypes.func.isRequired,
-	updateClient: PropTypes.func.isRequired,
 	deleteClient: PropTypes.func.isRequired,
 };
 
