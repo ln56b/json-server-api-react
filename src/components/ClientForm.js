@@ -9,7 +9,7 @@ function ClientForm({ client, handleChange, handleSubmit }) {
 	return (
 		<div className="form">
 			<h2>Ajouter / Modifier un client</h2>
-			<Form onSubmit={handleSubmit}>
+			<Form onSubmit={handleSubmit} noValidate>
 				<Form.Row>
 					<Col xs={12} sm={6} lg={4}>
 						<Form.Group controlId="genre">
@@ -27,25 +27,27 @@ function ClientForm({ client, handleChange, handleSubmit }) {
 					</Col>
 
 					<Col xs={12} sm={6} lg={4}>
-						<Form.Group controlId="prenom" required>
+						<Form.Group controlId="prenom">
 							<Form.Label>Prénom</Form.Label>
 							<Form.Control
 								type="text"
 								name="prenom"
 								value={client.prenom}
 								onChange={handleChange}
+								required
 							/>
 						</Form.Group>
 					</Col>
 
 					<Col xs={12} sm={6} lg={4}>
-						<Form.Group controlId="nom" required>
+						<Form.Group controlId="nom">
 							<Form.Label>Nom</Form.Label>
 							<Form.Control
 								type="text"
 								name="nom"
 								value={client.nom}
 								onChange={handleChange}
+								required
 							/>
 						</Form.Group>
 					</Col>
@@ -53,7 +55,7 @@ function ClientForm({ client, handleChange, handleSubmit }) {
 
 				<Form.Row>
 					<Col xs={12} sm={6} lg={4}>
-						<Form.Group controlId="email" required>
+						<Form.Group controlId="email">
 							<Form.Label>Email</Form.Label>
 							<Form.Control
 								type="email"
@@ -61,6 +63,7 @@ function ClientForm({ client, handleChange, handleSubmit }) {
 								value={client.email}
 								placeholder="Entrez un email"
 								onChange={handleChange}
+								required
 							/>
 						</Form.Group>
 					</Col>
